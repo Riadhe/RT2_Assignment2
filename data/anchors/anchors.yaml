@@ -1,0 +1,40 @@
+# =====================================================================
+# ANCHOR MEASUREMENTS - real values from the COGAR benchmark
+# (one full run of each framework on each recorded ROS 2 bag).
+# Source: COGAR_3D_Mapping_with_G1_EDU_in_Isaac-Sim / evaluation/results
+# These anchor the synthetic trial generator: every simulated trial is
+# drawn from a distribution centred on these values, with the
+# dispersion assumptions stated below (and in the paper, Sec. IV).
+# =====================================================================
+
+anchors:
+  simple_room:
+    nvblox:   {latency_ms: 496,  coverage_m3: 3.17,  density_pts_m3: 88}
+    rtabmap:  {latency_ms: 6380, coverage_m3: 9.49,  density_pts_m3: 1073}
+    octomap:  {latency_ms: 459,  coverage_m3: 2.93,  density_pts_m3: 469}
+  warehouse:
+    nvblox:   {latency_ms: 386,  coverage_m3: 2.65,  density_pts_m3: 69}
+    rtabmap:  {latency_ms: 4628, coverage_m3: 10.13, density_pts_m3: 1280}
+    octomap:  {latency_ms: 1265, coverage_m3: 5.98,  density_pts_m3: 344}
+
+# ---------------------------------------------------------------------
+# SYNTHETIC-DATA ASSUMPTIONS (stated explicitly, per the assignment)
+# latency:  log-normal around the anchor median (update intervals are
+#           positive and right-skewed). sigma_log = 0.12 for NVBlox and
+#           OctoMap; 0.20 for RTAB-Map (keyframe acceptance makes its
+#           intervals far more irregular: observed max 22.8 s vs
+#           median 6.4 s in COGAR).
+# coverage: normal, CV = 5% (the scripted 360 rotation makes coverage
+#           highly repeatable).
+# density:  normal, CV = 8% (depends on frames integrated).
+# success:  Bernoulli; a trial succeeds if the pipeline completes with
+#           a usable map. Probabilities reflect observed reliability
+#           (message drops under load hit the warehouse hardest).
+# ---------------------------------------------------------------------
+assumptions:
+  latency_sigma_log: {nvblox: 0.12, octomap: 0.12, rtabmap: 0.20}
+  coverage_cv: 0.05
+  density_cv: 0.08
+  success_prob:
+    simple_room: {nvblox: 0.98, rtabmap: 0.95, octomap: 0.98}
+    warehouse:   {nvblox: 0.95, rtabmap: 0.85, octomap: 0.92}
