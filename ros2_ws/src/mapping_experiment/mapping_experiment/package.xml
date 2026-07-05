@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>mapping_experiment</name>
+  <version>0.1.0</version>
+  <description>Simulated 3D-mapping trials anchored to the COGAR benchmark (RT2 assignment).</description>
+  <maintainer email="s8335614@studenti.unige.it">Riadh Bahri</maintainer>
+  <license>MIT</license>
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <export><build_type>ament_python</build_type></export>
+</package>
